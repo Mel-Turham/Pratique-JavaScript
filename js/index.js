@@ -9,7 +9,7 @@ const personnes = [
 		type: 'admin',
 		nom: 'John Wick',
 		age: 25,
-		villes: ['paris'],
+		villes: ['Paris'],
 	},
 	{
 		type: 'user',
@@ -26,7 +26,7 @@ const personnes = [
 	{
 		type: 'user',
 		nom: 'Jack Wilson',
-		age: '35',
+		age: 34,
 		villes: ['Marseilles', 'Lyon', 'Monpellier'],
 	},
 	{
@@ -39,45 +39,50 @@ const personnes = [
 
 //  1) une fonction qui retourne la liste des personnes selon le type passe en paramettre
 
-const personneAdmin = personnes.filter((personne) => {
-	return personne.type == 'admin';
-});
-// console.log(personneAdmin);
-
-const personneNom = personneAdmin.map((nom) => {
-	return nom.nom;
-});
-
-// console.log(personneNom);
+function getByType(type) {
+	return personnes.filter((personneType) => {
+		return personneType.type == type;
+	});
+}
+const getPersonListByType = getByType('user');
+// console.log(getPersonListByType);
 
 /*
  2) function qui renvoie les personnes ayant la ville passer en paramettre
 */
 
-const villeMonpellier = personnes.filter((ville) => {
-	return ville.villes.includes('Monpellier');
-});
+function getByVille(ville) {
+	return personnes.filter((personne) => {
+		return personne.villes.includes(ville);
+	});
+}
+let userprompt = prompt('Entrez une ville', 'Paris')
+const getListPerson = getByVille(userprompt);
 
-// console.log(villeMonpellier);
+console.log(getListPerson);
 
-const personneVilleDeMonpellier = villeMonpellier.map((personne) => {
-	return personne.nom;
-});
+// console.log(getListPerson);
 
-// console.log(personneVilleDeMonpellier);
+// console.log(getNamePerson);
 
 /*
   3) une liste de personnes n'ayant pas la ville passer en paramettre
 */
+function getOtherVilleThan(ville) {
+	return personnes
+		.filter((personne) => {
+			return !personne.villes.includes(ville);
+		})
+		.map((nom) => {
+			return {
+				Nom: nom.nom,
+			};
+		});
+}
 
-const personnePasCetteVille = personnes
-	.filter((personne) => {
-		return !personne.villes.includes('Monpellier');
-	})
-	.map((nom) => {
-		return nom.nom;
-	});
-// console.log(personnePasCetteVille);
+const getNameOtherVilleTham = getOtherVilleThan('Nice');
+
+// console.log(getNameOtherVilleTham);
 
 // const nomPersonnePasCetteVille = personnePasCetteVille.map(nom=>{
 //   return nom.nom;
@@ -166,10 +171,24 @@ function toutLesVilles() {
 		return personne.villes;
 	});
 	return Array.from(new Set(villes));
-};
+}
 
 const difvilles = toutLesVilles();
 
 // console.log(difvilles);
 
+// Q10: une fonction qui retourne la moyenne d'age (d'employés) de la ville passée en paramètre.
+let somme = 0;
+function getAvgAge(ville) {
+	return personnes
+		.filter((persnone) => {
+			return persnone.villes.includes(ville);
+		})
+		.reduce((accumulateur, personne) => {
+			return (somme = accumulateur + personne.age);
+		}, 0);
+}
 
+const sommeAgePersonne = getAvgAge('Paris');
+// console.log(somme);
+// console.log(sommeAgePersonne);
